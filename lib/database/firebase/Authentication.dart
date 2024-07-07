@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'HomeScreen.dart';
+import '../../screens/chat_list_screen.dart';
 
 class Auth {
  String? loginCache;

@@ -1,10 +1,12 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'Authentication.dart';
-import 'HomeScreen.dart';
-import 'LoginScreen.dart';
+import '../database/firebase/Authentication.dart';
+import '../database/firebase/firestore.dart';
+import 'login_screen.dart';
+
 
 class SignUpScreen extends StatefulWidget {
   final String title;
@@ -195,11 +197,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           _emailController.text.endsWith("@gmail.com") &&
                           _passController.text.length >= 4 &&
                           _nameController.text.length >= 4) {
-                        await Auth.registerUsingEmailAndPassword(
+                       final User? user =  await Auth.registerUsingEmailAndPassword(
                             email: _emailController.text,
                             password: _passController.text,
                             name: _nameController.text,
                             context: context);
+                       if(user != null){
+                       await DatabaseService().addUser( userId: user.uid, name: user.displayName ?? "", email: user.email ?? "");
+                       }
                       } else {
                         const snackBar =
                             SnackBar(content: Text("Enter Correctly"));
@@ -218,7 +223,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         style: TextStyle(
                           fontSize: 15.sp,
                           fontWeight: FontWeight.w600,
-                        )),
+                        ))
                   ),
                   SizedBox(height: 22.h),
                   Row(

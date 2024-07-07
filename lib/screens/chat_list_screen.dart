@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'Authentication.dart';
+import '../database/firebase/Authentication.dart';
+import 'app_users_screen.dart';
 class HomePage extends StatelessWidget {
   final String loginCheck;
    HomePage({Key? key, required this.loginCheck}) : super(key: key);
@@ -26,6 +27,9 @@ class HomePage extends StatelessWidget {
           Text(user!.uid),
         ]),
       ),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        Navigator.push(context, MaterialPageRoute(builder: (_) => AppUsersScreen()));
+      },),
     );
   }
 }
